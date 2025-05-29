@@ -21,6 +21,7 @@ public class Producto {
     private String Accesorio;
     private String Description;
     private double Precio;
+    private String Imagen;
 
 
     //METODO CONSTRUCTOR

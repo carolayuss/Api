@@ -1,3 +1,5 @@
+package com.tienda.crud.controller;
+
 import com.tienda.crud.Model.Promocion;
 import com.tienda.crud.Repository.PromocionRepository;
 import org.springframework.http.HttpStatus;
