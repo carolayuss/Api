@@ -41,3 +41,4 @@ public class Categoria {
     public void setId(Long id) {
     }
 }
+

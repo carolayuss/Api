@@ -16,8 +16,8 @@ public class Cliente {
     private long id_cliente;
     private String nombre;
     private String email;
-    private String telefono;
-    private String direccion;
+    private String teléfono;
+    private String dirección;
     private String contraseña;
 
     public Cliente() {
@@ -35,4 +35,3 @@ public class Cliente {
     public void setId(Long id) {
     }
 }
-
