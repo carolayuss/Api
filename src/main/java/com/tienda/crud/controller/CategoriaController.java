@@ -1,4 +1,4 @@
-package com.tienda.crud.Controller;
+package com.tienda.crud.controller;
 
 public class CategoriaController {
 }
