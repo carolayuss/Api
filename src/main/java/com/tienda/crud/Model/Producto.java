@@ -12,6 +12,8 @@ public class Producto {
     private double precio;
     private int stock;
     private String Imagen;
+
+
     public Producto() {
     }
 
@@ -37,9 +39,7 @@ public class Producto {
         return Imagen;
     }
 
-    public void setImagen(String imagen) {
-        Imagen = imagen;
-    }
+    public void setImagen(String imagen) { this.Imagen = imagen; }
 
     public Categoria getCategoria() {
         return categoria;
