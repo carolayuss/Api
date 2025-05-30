@@ -12,7 +12,7 @@ import java.util.Optional;
 
 
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/producto")
 
@@ -23,7 +23,7 @@ public class ProductoController {
     public ProductoController(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
     }
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @GetMapping
     public List<Producto> obtenerProducto(){
         return productoRepository.findAll();
