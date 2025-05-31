@@ -1,8 +1,10 @@
 package com.tienda.crud.Model;
 
 import jakarta.persistence.*;
+import org.hibernate.type.descriptor.jdbc.VarcharJdbcType;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -11,27 +13,20 @@ public class Promocion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_promocion;
     private String nombre;
-    private Double descuento;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    private String descripcion;
+    private double tipo_descuento;
+    private double valor_descuento;
+    private Date fecha_inicio;
+    private Date fecha_fin;
 
-    public Promocion() {
-    }
-
-    @ManyToMany
-    @JoinTable(
-            name = "promocion_cliente",
-            joinColumns = @JoinColumn(name = "id_promocion"),
-            inverseJoinColumns = @JoinColumn (name = "id_cliente"))
-    private List<Cliente> clienteList;
-
-    public Promocion(Long id_promocion, String nombre, Double descuento, LocalDate fechaInicio, LocalDate fechaFin, List<Cliente> clienteList) {
+    public Promocion(Long id_promocion, String nombre, String descripcion, double tipo_descuento, double valor_descuento, Date fecha_inicio, Date fecha_fin) {
         this.id_promocion = id_promocion;
         this.nombre = nombre;
-        this.descuento = descuento;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.clienteList = clienteList;
+        this.descripcion = descripcion;
+        this.tipo_descuento = tipo_descuento;
+        this.valor_descuento = valor_descuento;
+        this.fecha_inicio = fecha_inicio;
+        this.fecha_fin = fecha_fin;
     }
 
     public Long getId_promocion() {
@@ -50,40 +45,49 @@ public class Promocion {
         this.nombre = nombre;
     }
 
-    public Double getDescuento() {
-        return descuento;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescuento(Double descuento) {
-        this.descuento = descuento;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public LocalDate getFechaInicio() {
-        return fechaInicio;
+    public double getTipo_descuento() {
+        return tipo_descuento;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setTipo_descuento(double tipo_descuento) {
+        this.tipo_descuento = tipo_descuento;
     }
 
-    public LocalDate getFechaFin() {
-        return fechaFin;
+    public double getValor_descuento() {
+        return valor_descuento;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
-        this.fechaFin = fechaFin;
+    public void setValor_descuento(double valor_descuento) {
+        this.valor_descuento = valor_descuento;
     }
 
-    public List<Cliente> getClienteList() {
-        return clienteList;
+    public Date getFecha_inicio() {
+        return fecha_inicio;
     }
 
-    public void setClienteList(List<Cliente> clienteList) {
+    public void setFecha_inicio(Date fecha_inicio) {
+        this.fecha_inicio = fecha_inicio;
+    }
 
+    public Date getFecha_fin() {
+        return fecha_fin;
+    }
+
+    public void setFecha_fin(Date fecha_fin) {
+        this.fecha_fin = fecha_fin;
     }
 
     public void setId(Long id) {
     }
 }
+
 
 
