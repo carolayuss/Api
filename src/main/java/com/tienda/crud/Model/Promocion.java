@@ -1,93 +1,67 @@
 package com.tienda.crud.Model;
 
 import jakarta.persistence.*;
-import org.hibernate.type.descriptor.jdbc.VarcharJdbcType;
-
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 public class Promocion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_promocion;
-    private String nombre;
-    private String descripcion;
-    private double tipo_descuento;
-    private double valor_descuento;
-    private Date fecha_inicio;
-    private Date fecha_fin;
+    private Long id;
 
-    public Promocion(Long id_promocion, String nombre, String descripcion, double tipo_descuento, double valor_descuento, Date fecha_inicio, Date fecha_fin) {
-        this.id_promocion = id_promocion;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.tipo_descuento = tipo_descuento;
-        this.valor_descuento = valor_descuento;
-        this.fecha_inicio = fecha_inicio;
-        this.fecha_fin = fecha_fin;
+    private String tipoDescuento;
+
+    private Double valorDescuento;
+
+    @ManyToMany(mappedBy = "promociones")
+    private List<Cliente> clientes = new ArrayList<>();
+
+    // ⚠️ Constructor vacío requerido por JPA
+    public Promocion() {}
+
+    // ✔️ Constructor útil adicional si quieres crear promociones desde código
+    public Promocion(String tipoDescuento, Double valorDescuento) {
+        this.tipoDescuento = tipoDescuento;
+        this.valorDescuento = valorDescuento;
     }
 
-    public Long getId_promocion() {
-        return id_promocion;
-    }
+    // Getters y setters
 
-    public void setId_promocion(Long id_promocion) {
-        this.id_promocion = id_promocion;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public double getTipo_descuento() {
-        return tipo_descuento;
-    }
-
-    public void setTipo_descuento(double tipo_descuento) {
-        this.tipo_descuento = tipo_descuento;
-    }
-
-    public double getValor_descuento() {
-        return valor_descuento;
-    }
-
-    public void setValor_descuento(double valor_descuento) {
-        this.valor_descuento = valor_descuento;
-    }
-
-    public Date getFecha_inicio() {
-        return fecha_inicio;
-    }
-
-    public void setFecha_inicio(Date fecha_inicio) {
-        this.fecha_inicio = fecha_inicio;
-    }
-
-    public Date getFecha_fin() {
-        return fecha_fin;
-    }
-
-    public void setFecha_fin(Date fecha_fin) {
-        this.fecha_fin = fecha_fin;
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTipoDescuento() {
+        return tipoDescuento;
+    }
+
+    public void setTipoDescuento(String tipoDescuento) {
+        this.tipoDescuento = tipoDescuento;
+    }
+
+    public Double getValorDescuento() {
+        return valorDescuento;
+    }
+
+    public void setValorDescuento(Double valorDescuento) {
+        this.valorDescuento = valorDescuento;
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
 }
+
 
 
 

@@ -5,9 +5,11 @@ import com.tienda.crud.Model.Producto;
 import com.tienda.crud.Repository.ClienteRepository;
 import com.tienda.crud.Repository.ProductoRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+
 
 
 @RestController
@@ -27,9 +29,10 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public Cliente obtenerClientePorId (@PathVariable Long id) {
-        Optional<Cliente> producto=clienteRepository.findById(id);
-        return Cliente.orElse(null);
+    public ResponseEntity<Cliente> obtenerClientePorId(@PathVariable Long id) {
+        return clienteRepository.findById(id)
+                .map(cliente -> ResponseEntity.ok(cliente))
+                .orElse(ResponseEntity.notFound().build());
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
