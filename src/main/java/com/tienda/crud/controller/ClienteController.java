@@ -36,7 +36,7 @@ public class ClienteController {
     public Cliente guardarCliente(@RequestBody Cliente cliente){
         return clienteRepository.save(cliente);
     }
-    @PutMapping
+    @PutMapping("/{id}")
     public Cliente actualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
         cliente.setId(id);
         return clienteRepository.save(cliente);

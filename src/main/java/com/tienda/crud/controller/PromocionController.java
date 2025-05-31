@@ -32,7 +32,7 @@ public class PromocionController {
     public Promocion guardarPromocion(@RequestBody Promocion promocion){
         return promocionRepository.save(promocion);
     }
-    @PutMapping
+    @PutMapping("/{id}")
     public Promocion actualizarPromocion(@PathVariable Long id, @RequestBody Promocion promocion) {
         promocion.setId(id);
         return promocionRepository.save(promocion);

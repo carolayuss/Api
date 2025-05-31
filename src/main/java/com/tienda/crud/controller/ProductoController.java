@@ -12,7 +12,7 @@ import java.util.Optional;
 
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 @RequestMapping("/api/producto")
 
@@ -39,7 +39,8 @@ public class ProductoController {
     public Producto guardarProducto(@RequestBody Producto producto){
         return productoRepository.save(producto);
     }
-    @PutMapping
+
+    @PutMapping("/{id}")
     public Producto actualizarProducto(@PathVariable Long id, @RequestBody Producto producto) {
         producto.setId(id);
         return productoRepository.save(producto);
