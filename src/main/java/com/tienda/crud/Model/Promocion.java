@@ -9,19 +9,20 @@ public class Promocion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_promocion;
 
     private String tipoDescuento;
 
     private Double valorDescuento;
 
     @ManyToMany(mappedBy = "promociones")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Cliente> clientes = new ArrayList<>();
 
-    // ⚠️ Constructor vacío requerido por JPA
+
     public Promocion() {}
 
-    // ✔️ Constructor útil adicional si quieres crear promociones desde código
+
     public Promocion(String tipoDescuento, Double valorDescuento) {
         this.tipoDescuento = tipoDescuento;
         this.valorDescuento = valorDescuento;
@@ -30,11 +31,11 @@ public class Promocion {
     // Getters y setters
 
     public Long getId() {
-        return id;
+        return id_promocion;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_promocion= id;
     }
 
     public String getTipoDescuento() {

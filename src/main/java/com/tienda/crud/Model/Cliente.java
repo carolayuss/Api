@@ -1,17 +1,21 @@
 package com.tienda.crud.Model;
 
 import jakarta.persistence.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_cliente;
 
     private String nombre;
+
+    private String email;
+
+    private String telefono;
 
     @ManyToMany
     @JoinTable(
@@ -21,21 +25,23 @@ public class Cliente {
     )
     private List<Promocion> promociones = new ArrayList<>();
 
-    // ⚠️ Constructor vacío requerido por JPA
+    // Constructor vacío
     public Cliente() {}
 
-    // ✔️ Constructor adicional si lo necesitas
-    public Cliente(String nombre) {
+    public Cliente(String nombre, String email, String telefono) {
         this.nombre = nombre;
+        this.email = email;
+        this.telefono = telefono;
     }
 
     // Getters y setters
+
     public Long getId() {
-        return id;
+        return id_cliente;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_cliente= id;
     }
 
     public String getNombre() {
@@ -46,6 +52,22 @@ public class Cliente {
         this.nombre = nombre;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
     public List<Promocion> getPromociones() {
         return promociones;
     }
@@ -54,4 +76,5 @@ public class Cliente {
         this.promociones = promociones;
     }
 }
+
 
