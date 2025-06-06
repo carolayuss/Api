@@ -17,6 +17,16 @@ public class Cliente {
 
     private String telefono;
 
+    private String direccion;
+
+    public Cliente(Long id_cliente) {
+        this.id_cliente = id_cliente;
+    }
+
+    public Cliente(String direccion) {
+
+    }
+
     @ManyToMany
     @JoinTable(
             name = "cliente_promocion",
@@ -28,13 +38,23 @@ public class Cliente {
     // Constructor vacío
     public Cliente() {}
 
-    public Cliente(String nombre, String email, String telefono) {
+    public Cliente(String nombre, String email, String telefono, String direccion) {
         this.nombre = nombre;
         this.email = email;
         this.telefono = telefono;
+        this.direccion = direccion;
     }
 
     // Getters y setters
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
 
     public Long getId() {
         return id_cliente;
