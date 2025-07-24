@@ -14,7 +14,7 @@ public class Producto {
     private String Imagen;
 
 
-    public Producto() {
+    public Producto() { 
     }
 
     public Producto(String imagen) {

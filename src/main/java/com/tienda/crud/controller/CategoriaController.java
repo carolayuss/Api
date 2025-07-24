@@ -3,7 +3,6 @@
     import com.tienda.crud.Model.Categoria;
     import com.tienda.crud.Model.Cliente;
     import com.tienda.crud.Repository.CategoriaRepository;
-    import com.tienda.crud.Repository.ClienteRepository;
     import org.springframework.http.HttpStatus;
     import org.springframework.web.bind.annotation.*;
 

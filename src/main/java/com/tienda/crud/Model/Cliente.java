@@ -1,67 +1,58 @@
 package com.tienda.crud.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "clientes") // El nombre de tu tabla en la BD
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_cliente;
+    private String cedula; // Cambiado a String para la cédula
 
     private String nombre;
-
     private String email;
-
     private String telefono;
-
     private String direccion;
+    private String contrasena; // Corregido de 'contraseña'
+    @Transient
+    private String confirmarContrasena;
 
-    public Cliente(Long id_cliente) {
-        this.id_cliente = id_cliente;
-    }
+    // --- CONSTRUCTORES ---
 
-    public Cliente(String direccion) {
-
-    }
-
-    @ManyToMany
-    @JoinTable(
-            name = "cliente_promocion",
-            joinColumns = @JoinColumn(name = "cliente_id"),
-            inverseJoinColumns = @JoinColumn(name = "promocion_id")
-    )
-    private List<Promocion> promociones = new ArrayList<>();
-
-    // Constructor vacío
     public Cliente() {}
+    public Cliente(String cedula) {
+        this.cedula = cedula;
+    }
 
-    public Cliente(String nombre, String email, String telefono, String direccion) {
+    public Cliente(String cedula, String nombre, String email, String telefono, String direccion, String contrasena) {
+        this.cedula = cedula;
         this.nombre = nombre;
         this.email = email;
         this.telefono = telefono;
         this.direccion = direccion;
+        this.contrasena = contrasena;
     }
 
-    // Getters y setters
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "cliente_promocion",
+            joinColumns = @JoinColumn(name = "cliente_cedula"), // ¡Importante cambiar esto!
+            inverseJoinColumns = @JoinColumn(name = "promocion_id")
+    )
+    private List<Promocion> promociones = new ArrayList<>();
 
-    public String getDireccion() {
-        return direccion;
+    // --- GETTERS Y SETTERS ---
+
+    public String getCedula() {
+        return cedula;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-
-    public Long getId() {
-        return id_cliente;
-    }
-
-    public void setId(Long id) {
-        this.id_cliente= id;
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public String getNombre() {
@@ -86,6 +77,30 @@ public class Cliente {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getConfirmarContrasena() {
+        return confirmarContrasena;
+    }
+
+    public void setConfirmarContrasena(String confirmarContrasena) {
+        this.confirmarContrasena = confirmarContrasena;
     }
 
     public List<Promocion> getPromociones() {

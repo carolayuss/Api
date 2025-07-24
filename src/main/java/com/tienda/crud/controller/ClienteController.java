@@ -1,79 +1,56 @@
 package com.tienda.crud.controller;
 
 import com.tienda.crud.Model.Cliente;
-import com.tienda.crud.Model.Promocion; // IMPORTAR Promocion
 import com.tienda.crud.Repository.ClienteRepository;
-import com.tienda.crud.Repository.PromocionRepository; // IMPORTAR PromocionRepository
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/cliente")
+@RequestMapping("/api/clientes")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ClienteController {
 
-    private final ClienteRepository clienteRepository;
-    private final PromocionRepository promocionRepository;  // Inyectar promocionRepository
-
-    // Constructor para inyectar ambos repositorios
-    public ClienteController(ClienteRepository clienteRepository, PromocionRepository promocionRepository) {
-        this.clienteRepository = clienteRepository;
-        this.promocionRepository = promocionRepository;
-    }
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @GetMapping
-    public List<Cliente> obtenerClientes(){  // Cambié nombre de método para que sea coherente
+    public List<Cliente> getAllClientes() {
         return clienteRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Cliente> obtenerClientePorId(@PathVariable Long id) {
-        return clienteRepository.findById(id)
-                .map(cliente -> ResponseEntity.ok(cliente))
+    @PostMapping
+    public Cliente createCliente(@RequestBody Cliente cliente) {
+        return clienteRepository.save(cliente);
+    }
+
+    @GetMapping("/{cedula}")
+    public ResponseEntity<Cliente> getClienteByCedula(@PathVariable String cedula) {
+        return clienteRepository.findById(cedula)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Cliente guardarCliente(@RequestBody Cliente cliente){
-        // Buscar la promoción del 50%
-        Optional<Promocion> promo50Opt = promocionRepository.findByNombre("Bienvenida 50%");
+    // Nuevo endpoint para login
+    @PostMapping("/login")
+    public ResponseEntity<?> loginCliente(@RequestBody Cliente loginData) {
+        Optional<Cliente> clienteOpt = clienteRepository.findByEmail(loginData.getEmail());
 
-        Promocion promo50;
-        if (promo50Opt.isPresent()) {
-            promo50 = promo50Opt.get();
+        if (clienteOpt.isPresent()) {
+            Cliente cliente = clienteOpt.get();
+            if (cliente.getContrasena().equals(loginData.getContrasena())) {
+                return ResponseEntity.ok(cliente);
+            } else {
+                return ResponseEntity.status(401).body("Contraseña incorrecta");
+            }
         } else {
-            // Si no existe, la creamos
-            promo50 = new Promocion();
-            promo50.setNombre("Bienvenida 50%");
-            promo50.setDescripcion("Descuento del 50% por ser cliente nuevo");
-            promo50.setTipo_descuento("porcentaje");
-            promo50.setValor_descuento(50.0);
-            promo50.setFecha_inicio(LocalDate.now());
-            promo50.setFecha_fin(LocalDate.now().plusMonths(1)); // válido por 1 mes
-            promocionRepository.save(promo50);
+            return ResponseEntity.status(401).body("Usuario no encontrado");
         }
-
-        cliente.getPromociones().add(promo50);
-        return clienteRepository.save(cliente);
-    }
-
-    @PutMapping("/{id}")
-    public Cliente actualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
-        cliente.setId(id);
-        return clienteRepository.save(cliente);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void eliminarCliente(@PathVariable Long id){
-        clienteRepository.deleteById(id);
     }
 }
+
 
 
