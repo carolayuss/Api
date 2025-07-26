@@ -1,6 +1,6 @@
-package com.tienda.crud.Repository;
+package com.tienda.crud.repository;
 
-import com.tienda.crud.Model.Promocion;
+import com.tienda.crud.model.Promocion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

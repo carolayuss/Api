@@ -1,7 +1,7 @@
 package com.tienda.crud.controller;
 
-import com.tienda.crud.Model.Cliente;
-import com.tienda.crud.Repository.ClienteRepository;
+import com.tienda.crud.model.Cliente;
+import com.tienda.crud.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,9 +1,8 @@
 package com.tienda.crud.controller;
 
-import com.tienda.crud.Model.Promocion;
-import com.tienda.crud.Repository.PromocionRepository;
+import com.tienda.crud.model.Promocion;
+import com.tienda.crud.repository.PromocionRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
