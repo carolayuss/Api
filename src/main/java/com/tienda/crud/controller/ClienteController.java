@@ -4,6 +4,7 @@ import com.tienda.crud.model.Cliente;
 import com.tienda.crud.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping
     public List<Cliente> getAllClientes() {
         return clienteRepository.findAll();
@@ -24,6 +28,13 @@ public class ClienteController {
 
     @PostMapping
     public Cliente createCliente(@RequestBody Cliente cliente) {
+        if (cliente.getContrasena() != null) {
+            String passHashed = passwordEncoder.encode(cliente.getContrasena());
+            cliente.setContrasena(passHashed);
+        } else {
+            throw new IllegalArgumentException("La contraseña no puede ser nula");
+        }
+
         return clienteRepository.save(cliente);
     }
 
@@ -34,14 +45,15 @@ public class ClienteController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Nuevo endpoint para login
     @PostMapping("/login")
     public ResponseEntity<?> loginCliente(@RequestBody Cliente loginData) {
         Optional<Cliente> clienteOpt = clienteRepository.findByEmail(loginData.getEmail());
 
         if (clienteOpt.isPresent()) {
             Cliente cliente = clienteOpt.get();
-            if (cliente.getContrasena().equals(loginData.getContrasena())) {
+
+            // Comparar contraseña con hash almacenado
+            if (passwordEncoder.matches(loginData.getContrasena(), cliente.getContrasena())) {
                 return ResponseEntity.ok(cliente);
             } else {
                 return ResponseEntity.status(401).body("Contraseña incorrecta");
