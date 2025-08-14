@@ -3,11 +3,14 @@ package com.tienda.crud.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "categoria")
 public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_categoria")
     private Long id_categoria;
+    @Column(name = "nombre")
     private String nombre;
 
     public Categoria() {

@@ -2,11 +2,17 @@ package com.tienda.crud.controller;
 
 import com.tienda.crud.model.Cliente;
 import com.tienda.crud.repository.ClienteRepository;
+import jakarta.security.auth.message.AuthStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.web.AuthorizeRequestsDsl;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.webauthn.api.AuthenticatorResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.channels.ScatteringByteChannel;
+import java.security.AuthProvider;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,11 +54,8 @@ public class ClienteController {
     @PostMapping("/login")
     public ResponseEntity<?> loginCliente(@RequestBody Cliente loginData) {
         Optional<Cliente> clienteOpt = clienteRepository.findByEmail(loginData.getEmail());
-
         if (clienteOpt.isPresent()) {
             Cliente cliente = clienteOpt.get();
-
-            // Comparar contraseña con hash almacenado
             if (passwordEncoder.matches(loginData.getContrasena(), cliente.getContrasena())) {
                 return ResponseEntity.ok(cliente);
             } else {
@@ -63,6 +66,3 @@ public class ClienteController {
         }
     }
 }
-
-
-
